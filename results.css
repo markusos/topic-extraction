@@ -1,0 +1,50 @@
+body
+{
+background-color:#fafafa;
+}
+h1
+{
+color:orange;
+text-align:center;
+}
+p
+{
+font-family:"Times New Roman";
+font-size:20px;
+}
+
+.results
+{
+	width: 1000px;
+	margin: auto;
+}
+
+.result
+{
+	margin-top:20px;
+}
+
+.text
+{
+	width: 600px;
+	padding: 20px;
+	border: 2px solid green;
+	float: left;
+	border-radius: 10px;
+}
+
+.graph
+{
+	width: 1000px;
+}
+
+.topics
+{
+	width: 300px;
+	padding: 20px;
+	border: 2px solid blue;
+	float: right;
+	border-radius: 10px;
+}
+
+.clear { clear: both;}
