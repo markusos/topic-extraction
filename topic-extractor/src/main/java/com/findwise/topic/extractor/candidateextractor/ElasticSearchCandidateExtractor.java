@@ -2,7 +2,7 @@
  * ElasticSearch candidate extractor
  * 
  * Uses ElasticSearch to extract candidate topics from the text
-
+ *
  */
 
 package com.findwise.topic.extractor.candidateextractor;
@@ -28,97 +28,97 @@ import org.elasticsearch.search.SearchHit;
 
 public class ElasticSearchCandidateExtractor implements CandidateExtractor {
 
-	Node node;
-	Client client;
-	Tokenizer tokenizer;
-	int nrofSearchResults;
-	SearchMethod searchMethod;
-	QueryType queryType;
-	
-	Result result;
-	
-	public ElasticSearchCandidateExtractor(int nrofSearchResults, SearchMethod searchMethod, QueryType queryType) {
-		this.nrofSearchResults = nrofSearchResults;
-		this.searchMethod = searchMethod;
-		this.queryType = queryType;
-		
-		node = nodeBuilder().client(true).node();
-		client = node.client();
-		tokenizer = new Tokenizer(node, client);
-	}
-	
-	public Result getCandidates(String section) {
-		
-		result = new Result(section);
-		
-		if(searchMethod == SearchMethod.MULTI)
-			getCandidatesMultiSearch(section, result);
-		else{
-			getSentenceCandidates(section, result);
-		}
-		return result;
-	}
+    Node node;
+    Client client;
+    Tokenizer tokenizer;
+    int nrofSearchResults;
+    SearchMethod searchMethod;
+    QueryType queryType;
 
-	private Result getCandidatesMultiSearch(String section, Result result) {
-		String[] sentences = section.split("\\.");
-		for (String s : sentences)
-			getSentenceCandidates(s, result);
+    Result result;
 
-		return result;
-	}
+    public ElasticSearchCandidateExtractor(int nrofSearchResults, SearchMethod searchMethod, QueryType queryType) {
+        this.nrofSearchResults = nrofSearchResults;
+        this.searchMethod = searchMethod;
+        this.queryType = queryType;
 
-	private Result getSentenceCandidates(String sentence, Result result) {
-		BoolQueryBuilder query;
-		if(queryType == QueryType.TOKEN)
-			query = tokenQuery(sentence);
-		else
-			query = sectionQuery(sentence);
+        node = nodeBuilder().client(true).node();
+        client = node.client();
+        tokenizer = new Tokenizer(node, client);
+    }
 
-		QueryBuilder scoreQuery = QueryBuilders.customScoreQuery(query).script("_score"); 
+    public Result getCandidates(String section) {
 
-		SearchResponse response = client.prepareSearch("wiki")
-				.setTypes("article")
-				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-				.setQuery(scoreQuery).setFrom(0).setSize(nrofSearchResults)
-				.execute().actionGet();
+        result = new Result(section);
 
-		Document hitDocument;
-		for (SearchHit hit : response.getHits()) {
-			hitDocument = new Document(hit.getSource());
-			result.add(hitDocument, hit.score());
-		}
-		
-		return result;
-	}
+        if (searchMethod == SearchMethod.MULTI)
+            getCandidatesMultiSearch(section, result);
+        else {
+            getSentenceCandidates(section, result);
+        }
+        return result;
+    }
 
-	private BoolQueryBuilder tokenQuery(String section) {
-		Set<String> tokens = tokenizer.getTokens(section);
-		BoolQueryBuilder query = QueryBuilders.boolQuery();
+    private Result getCandidatesMultiSearch(String section, Result result) {
+        String[] sentences = section.split("\\.");
+        for (String s : sentences)
+            getSentenceCandidates(s, result);
 
-		for (String s : tokens) {
-			query = query
-					.should(QueryBuilders.matchQuery("links", s).boost(
-							(float) (1.0)))
-					.should(QueryBuilders.matchQuery("title", s).boost(
-							(float) 0.1))
-					.should(QueryBuilders.matchQuery("redirects", s).boost(
-							(float) 0.1));
-		}
+        return result;
+    }
 
-		return query;
-	}
+    private Result getSentenceCandidates(String sentence, Result result) {
+        BoolQueryBuilder query;
+        if (queryType == QueryType.TOKEN)
+            query = tokenQuery(sentence);
+        else
+            query = sectionQuery(sentence);
 
-	private BoolQueryBuilder sectionQuery(String section) {
-		BoolQueryBuilder query = QueryBuilders.boolQuery();
+        QueryBuilder scoreQuery = QueryBuilders.customScoreQuery(query).script("_score");
 
-		query = query
-				.should(QueryBuilders.matchQuery("links", section).boost(
-						(float) 1.0))
-				.should(QueryBuilders.matchQuery("title", section).boost(
-						(float) 0.1))
-				.should(QueryBuilders.matchQuery("redirects", section).boost(
-						(float) 0.1));
+        SearchResponse response = client.prepareSearch("wiki")
+                .setTypes("article")
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(scoreQuery).setFrom(0).setSize(nrofSearchResults)
+                .execute().actionGet();
 
-		return query;
-	}
+        Document hitDocument;
+        for (SearchHit hit : response.getHits()) {
+            hitDocument = new Document(hit.getSource());
+            result.add(hitDocument, hit.score());
+        }
+
+        return result;
+    }
+
+    private BoolQueryBuilder tokenQuery(String section) {
+        Set<String> tokens = tokenizer.getTokens(section);
+        BoolQueryBuilder query = QueryBuilders.boolQuery();
+
+        for (String s : tokens) {
+            query = query
+                    .should(QueryBuilders.matchQuery("links", s).boost(
+                            (float) (1.0)))
+                    .should(QueryBuilders.matchQuery("title", s).boost(
+                            (float) 0.1))
+                    .should(QueryBuilders.matchQuery("redirects", s).boost(
+                            (float) 0.1));
+        }
+
+        return query;
+    }
+
+    private BoolQueryBuilder sectionQuery(String section) {
+        BoolQueryBuilder query = QueryBuilders.boolQuery();
+
+        query = query
+                .should(QueryBuilders.matchQuery("links", section).boost(
+                        (float) 1.0))
+                .should(QueryBuilders.matchQuery("title", section).boost(
+                        (float) 0.1))
+                .should(QueryBuilders.matchQuery("redirects", section).boost(
+                        (float) 0.1));
+
+        return query;
+    }
 }

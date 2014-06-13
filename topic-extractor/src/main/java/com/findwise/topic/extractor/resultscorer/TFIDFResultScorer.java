@@ -14,21 +14,21 @@ import com.findwise.topic.extractor.util.ResultNode;
 
 public class TFIDFResultScorer implements ResultScorer {
 
-	public void calculateScore(Result result) {
-		calculateTFIDFScore(result);
-	}
-	
-	public String toString(){
-		return "TFIDFResultScorer";
-	}
+    public void calculateScore(Result result) {
+        calculateTFIDFScore(result);
+    }
 
-	private void calculateTFIDFScore(Result result) {
+    public String toString() {
+        return "TFIDFResultScorer";
+    }
 
-		Map<String, ResultNode> graph = result.getGraph();
+    private void calculateTFIDFScore(Result result) {
 
-		for (Entry<String, ResultNode> g : graph.entrySet()) {
-			ResultNode node = g.getValue();
-			node.setScore(node.getSearchScore());
-		}
-	}
+        Map<String, ResultNode> graph = result.getGraph();
+
+        for (Entry<String, ResultNode> g : graph.entrySet()) {
+            ResultNode node = g.getValue();
+            node.setScore(node.getSearchScore());
+        }
+    }
 }

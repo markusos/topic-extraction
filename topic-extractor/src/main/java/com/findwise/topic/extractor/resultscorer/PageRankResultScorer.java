@@ -14,48 +14,48 @@ import com.findwise.topic.extractor.util.ResultNode;
 
 public class PageRankResultScorer implements ResultScorer {
 
-	public void calculateScore(Result result) {
-		calculatePageRank(result);
-	}
-	
-	public String toString(){
-		return "PageRankResultScorer";
-	}
+    public void calculateScore(Result result) {
+        calculatePageRank(result);
+    }
 
-	private void calculatePageRank(Result result) {
-		Map<String, ResultNode> graph = result.getGraph();
+    public String toString() {
+        return "PageRankResultScorer";
+    }
 
-		for (Entry<String, ResultNode> g : graph.entrySet()) {
-			ResultNode currentNode = g.getValue();
-			currentNode.setScore(1);
-		}
+    private void calculatePageRank(Result result) {
+        Map<String, ResultNode> graph = result.getGraph();
 
-		float d = 0.85f;
+        for (Entry<String, ResultNode> g : graph.entrySet()) {
+            ResultNode currentNode = g.getValue();
+            currentNode.setScore(1);
+        }
 
-		float maxChange = 1;
-		while (maxChange > 0.1) {
-			maxChange = 0;
-			for (Entry<String, ResultNode> g : graph.entrySet()) {
+        float d = 0.85f;
 
-				ResultNode currentNode = g.getValue();
-				if (currentNode.isUsed()) {
-					float currentScore = currentNode.getScore();
-					float linkNodeScoreSum = 0;
+        float maxChange = 1;
+        while (maxChange > 0.1) {
+            maxChange = 0;
+            for (Entry<String, ResultNode> g : graph.entrySet()) {
 
-					for (ResultNode n : currentNode.getUsedBackLinks()) {
-						linkNodeScoreSum += n.getScore() / n.getUsedLinks().size();
-					}
+                ResultNode currentNode = g.getValue();
+                if (currentNode.isUsed()) {
+                    float currentScore = currentNode.getScore();
+                    float linkNodeScoreSum = 0;
 
-					float score = (1 - d) + d * linkNodeScoreSum;
-					currentNode.setScore(score);
+                    for (ResultNode n : currentNode.getUsedBackLinks()) {
+                        linkNodeScoreSum += n.getScore() / n.getUsedLinks().size();
+                    }
 
-					float change = Math.abs(score - currentScore);
-					// System.out.println("PageRank: " + g.getValue().title +
-					// " : " + score + " : " + change);
-					if (change > maxChange)
-						maxChange = change;
-				}
-			}
-		}
-	}
+                    float score = (1 - d) + d * linkNodeScoreSum;
+                    currentNode.setScore(score);
+
+                    float change = Math.abs(score - currentScore);
+                    // System.out.println("PageRank: " + g.getValue().title +
+                    // " : " + score + " : " + change);
+                    if (change > maxChange)
+                        maxChange = change;
+                }
+            }
+        }
+    }
 }

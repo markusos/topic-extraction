@@ -12,7 +12,6 @@ public class TestStore implements Store {
     private Set<String> cursorSet;
     private Iterator<String> cursor;
 
-
     @Override
     public void close() throws IOException {
         // Do nothing
@@ -35,7 +34,15 @@ public class TestStore implements Store {
 
     @Override
     public void update(Document document) throws Exception {
-        //To change body of implemented methods use File | Settings | File Templates.
+        if (!store.containsKey(document.getTitle())) {
+            System.err.println("Doc with title: " + document.getTitle()
+                    + " does not exist, Saving!");
+            save(document);
+        } else {
+            Document existing = store.get(document.getTitle());
+            existing.merge(document);
+            store.put(document.getTitle(), existing);
+        }
     }
 
     @Override

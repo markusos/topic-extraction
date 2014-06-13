@@ -10,7 +10,7 @@ import com.findwise.topic.extractor.util.Result;
 
 public interface ResultScorer {
 
-	public void calculateScore(Result result);
+    public void calculateScore(Result result);
 
-	public String toString();
+    public String toString();
 }

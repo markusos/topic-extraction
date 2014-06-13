@@ -18,59 +18,59 @@ import com.findwise.topic.extractor.util.ResultNode;
 public class ClosenessCentralityResultScorer implements ResultScorer {
 
 
-	public void calculateScore(Result result) {
-		calculateClosenessCentrality(result);
-	}
+    public void calculateScore(Result result) {
+        calculateClosenessCentrality(result);
+    }
 
 
-	public String toString(){
-		return "ClosenessCentralityResultScorer";
-	}
-	
-	private void calculateClosenessCentrality(Result result) {
+    public String toString() {
+        return "ClosenessCentralityResultScorer";
+    }
 
-		Map<String, ResultNode> graph = result.getUsedGraph();
+    private void calculateClosenessCentrality(Result result) {
 
-		for (Entry<String, ResultNode> g : graph.entrySet()) {
+        Map<String, ResultNode> graph = result.getUsedGraph();
 
-			float closeness = 0;
-			ResultNode node = g.getValue();
-			int distance = 0;
+        for (Entry<String, ResultNode> g : graph.entrySet()) {
 
-			Map<String, Integer> distances = distances(node);
+            float closeness = 0;
+            ResultNode node = g.getValue();
+            int distance = 0;
 
-			for (Entry<String, ResultNode> h : graph.entrySet()) {
-				ResultNode to = h.getValue();
-				if (distances.containsKey(to.getTitle())) {
-					distance = distances.get(to.getTitle());
-					if (distance > 0) {
-						closeness += 1.0 / distance;
-					}
-				}
-			}
-			node.setScore(1 + closeness);
-		}
-	}
+            Map<String, Integer> distances = distances(node);
 
-	private Map<String, Integer> distances(ResultNode start) {
-		Map<String, Integer> visited = new HashMap<String, Integer>();
-		int distance = 0;
-		Queue<ResultNode> queue = new LinkedList<ResultNode>();
-		queue.add(start);
-		visited.put(start.getTitle(), distance);
+            for (Entry<String, ResultNode> h : graph.entrySet()) {
+                ResultNode to = h.getValue();
+                if (distances.containsKey(to.getTitle())) {
+                    distance = distances.get(to.getTitle());
+                    if (distance > 0) {
+                        closeness += 1.0 / distance;
+                    }
+                }
+            }
+            node.setScore(1 + closeness);
+        }
+    }
 
-		ResultNode current;
-		while (!queue.isEmpty()) {
-			current = queue.poll();
-			distance = visited.get(current.getTitle()) + 1;
-			for (ResultNode r : current.getUsedEdges()) {
-				if (!visited.containsKey(r.getTitle())) {
-					visited.put(r.getTitle(), distance);
-					queue.add(r);
-				}
-			}
-		}
-		return visited;
-	}
+    private Map<String, Integer> distances(ResultNode start) {
+        Map<String, Integer> visited = new HashMap<String, Integer>();
+        int distance = 0;
+        Queue<ResultNode> queue = new LinkedList<ResultNode>();
+        queue.add(start);
+        visited.put(start.getTitle(), distance);
+
+        ResultNode current;
+        while (!queue.isEmpty()) {
+            current = queue.poll();
+            distance = visited.get(current.getTitle()) + 1;
+            for (ResultNode r : current.getUsedEdges()) {
+                if (!visited.containsKey(r.getTitle())) {
+                    visited.put(r.getTitle(), distance);
+                    queue.add(r);
+                }
+            }
+        }
+        return visited;
+    }
 
 }

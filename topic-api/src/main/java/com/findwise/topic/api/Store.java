@@ -10,28 +10,28 @@ import java.io.IOException;
 
 public interface Store {
 
-	public void close() throws IOException;
+    public void close() throws IOException;
 
-	public void clear() throws IOException;
+    public void clear() throws IOException;
 
-	public Document getDocument(String title);
+    public Document getDocument(String title);
 
-	public void save(Document document);
+    public void save(Document document);
 
-	public void update(Document document) throws Exception;
+    public void update(Document document) throws Exception;
 
-	public void delete(String title);
+    public void delete(String title);
 
-	public void setupCursor();
+    public void setupCursor();
 
-	public void setupCursor(int linkCount);
+    public void setupCursor(int linkCount);
 
-	public boolean cursorHasNext();
+    public boolean cursorHasNext();
 
-	public int cursorSize();
+    public int cursorSize();
 
-	public void closeCursor();
+    public void closeCursor();
 
-	public Document getNextDocument();
+    public Document getNextDocument();
 
 }

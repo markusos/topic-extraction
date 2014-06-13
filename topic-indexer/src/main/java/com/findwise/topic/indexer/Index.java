@@ -8,14 +8,14 @@ import com.findwise.topic.api.Document;
 
 public interface Index {
 
-	public void initBulkIndex();
+    public void initBulkIndex();
 
-	public void addToBulkIndex(Document document);
+    public void addToBulkIndex(Document document);
 
-	public void bulkIndex();
+    public void bulkIndex();
 
-	public void index(Document document);
+    public void index(Document document);
 
-	public void close();
+    public void close();
 
 }

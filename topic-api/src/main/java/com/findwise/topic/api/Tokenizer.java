@@ -14,25 +14,25 @@ import org.elasticsearch.node.Node;
 
 public class Tokenizer {
 
-	Node node;
-	Client client;
+    Node node;
+    Client client;
 
-	public Tokenizer(Node node, Client client) {
-		this.node = node;
-		this.client = client;
-	}
+    public Tokenizer(Node node, Client client) {
+        this.node = node;
+        this.client = client;
+    }
 
-	public Set<String> getTokens(String input) {
+    public Set<String> getTokens(String input) {
 
-		Set<String> tokens = new HashSet<String>();
+        Set<String> tokens = new HashSet<String>();
 
-		AnalyzeResponse analyzeResponse = client.admin().indices()
-				.prepareAnalyze(input).execute().actionGet();
+        AnalyzeResponse analyzeResponse = client.admin().indices()
+                .prepareAnalyze(input).execute().actionGet();
 
-		for (AnalyzeToken t : analyzeResponse.tokens()) {
-				tokens.add(t.term());
-		}
-		return tokens;
-	}
+        for (AnalyzeToken t : analyzeResponse.tokens()) {
+            tokens.add(t.term());
+        }
+        return tokens;
+    }
 
 }

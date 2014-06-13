@@ -9,18 +9,18 @@ import java.util.Set;
 
 public class BasicTokenizer {
 
-	public BasicTokenizer() {
+    public BasicTokenizer() {
 
-	}
+    }
 
-	public Set<String> getTokens(String input) {
-		Set<String> tokens = new HashSet<String>();
-		for (String t : tokenize(input))
-			tokens.add(t);
-		return tokens;
-	}
-	
-	private String[] tokenize(String s) {
-		return s.toLowerCase().split("[\\-\\+\\.\\^:,\\(\\)\\# ]");
-	}
+    public Set<String> getTokens(String input) {
+        Set<String> tokens = new HashSet<String>();
+        for (String t : tokenize(input))
+            tokens.add(t);
+        return tokens;
+    }
+
+    private String[] tokenize(String s) {
+        return s.toLowerCase().split("[\\-\\+\\.\\^:,\\(\\)# ]");
+    }
 }

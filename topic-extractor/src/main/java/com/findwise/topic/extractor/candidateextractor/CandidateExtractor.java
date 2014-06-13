@@ -8,6 +8,6 @@ import com.findwise.topic.extractor.util.Result;
 
 public interface CandidateExtractor {
 
-	public Result getCandidates(String section);
+    public Result getCandidates(String section);
 
 }

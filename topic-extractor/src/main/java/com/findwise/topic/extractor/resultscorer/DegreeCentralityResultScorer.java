@@ -15,23 +15,23 @@ import com.findwise.topic.extractor.util.ResultNode;
 public class DegreeCentralityResultScorer implements ResultScorer {
 
 
-	public void calculateScore(Result result) {
-		calculateDegreeCentrality(result);
-	}
-	
+    public void calculateScore(Result result) {
+        calculateDegreeCentrality(result);
+    }
 
-	public String toString(){
-		return "DegreeCentralityResultScorer";
-	}
 
-	private void calculateDegreeCentrality(Result result) {
+    public String toString() {
+        return "DegreeCentralityResultScorer";
+    }
 
-		Map<String, ResultNode> graph = result.getGraph();
+    private void calculateDegreeCentrality(Result result) {
 
-		for (Entry<String, ResultNode> g : graph.entrySet()) {
-			ResultNode node = g.getValue();
-			node.setScore(node.countUsedBackLinks() + node.countUsedLinks());
-		}
-	}
+        Map<String, ResultNode> graph = result.getGraph();
+
+        for (Entry<String, ResultNode> g : graph.entrySet()) {
+            ResultNode node = g.getValue();
+            node.setScore(node.countUsedBackLinks() + node.countUsedLinks());
+        }
+    }
 
 }
