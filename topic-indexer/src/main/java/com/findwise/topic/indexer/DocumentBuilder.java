@@ -73,7 +73,7 @@ public class DocumentBuilder {
 
     public void commitToDb() throws Exception {
 
-        System.out.println("Commiting to DB...");
+        System.out.println("Committing to DB...");
         int i = 1;
         for (Entry<String, Document> entry : memStore.entrySet()) {
 
