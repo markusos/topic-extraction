@@ -1,8 +1,3 @@
-#################
-## Eclipse
-#################
-
-*.pydevproject
 .project
 .metadata
 bin/
@@ -15,22 +10,8 @@ local.properties
 .classpath
 .settings/
 .loadpath
-
-# External tool builders
-.externalToolBuilders/
-
-# Locally stored "Eclipse launch configurations"
-*.launch
-
-# CDT-specific
 .cproject
-
-# PDT-specific
 .buildpath
-
-#############
-## Project
-#############
 
 *.jar
 *.class
@@ -42,19 +23,8 @@ error.txt
 logg.txt
 page_links_en.nt
 
-#############
-## Windows detritus
-#############
-
-# Windows image file caches
 Thumbs.db
 ehthumbs.db
-
-# Folder config file
 Desktop.ini
-
-# Recycle Bin used on file shares
 $RECYCLE.BIN/
-
-# Mac crap
 .DS_Store
