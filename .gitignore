@@ -38,6 +38,9 @@ local.properties
 .idea
 *.dot
 target/
+error.txt
+logg.txt
+page_links_en.nt
 
 #############
 ## Windows detritus
@@ -55,5 +58,3 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
-
-
