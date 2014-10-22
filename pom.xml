@@ -12,6 +12,7 @@
         <module>topic-api</module>
         <module>topic-extractor</module>
         <module>topic-indexer</module>
+        <module>topic</module>
     </modules>
     <dependencies>
         <dependency>

@@ -11,6 +11,8 @@ More info about the thesis project can be found at: http://www.nada.kth.se/~mark
 
 ## Example
 
+### Input document:
+
 Encyclopedia Britannicas definition of Tree:
 
 > Tree, woody plant that regularly renews its growth (perennial).
@@ -18,6 +20,8 @@ Encyclopedia Britannicas definition of Tree:
 > and in most species the trunk produces secondary limbs, called branches.
 
 ### Extracted Topics:
+
+The system extracts the following topics, presented order of the ranking by the system:
 
 1. Tree
 2. Perennial plant
@@ -27,33 +31,30 @@ Encyclopedia Britannicas definition of Tree:
 
 ### Candidate Graph:
 
+Extracted Candidate Graph used to rank the topics:
+
 ![example](docs/resultGraph.jpg)
 
 ## Setup
 
-### Requirements
-
- - [MongoDB](http://www.mongodb.org/)
- - [ElasticSearch](http://www.elasticsearch.org/)
-
-### Index Ontology
-
-To build the Ontology used for the topic extraction we use the DBpedia Wikipedia Pagelinks Dataset.
-
+### Download:
 - Download DBpedia Wikipedia Pagelinks Dataset: [page_links_bg.nt.bz2](http://data.dws.informatik.uni-mannheim.de/dbpedia/2014/bg/page_links_bg.nt.bz2)
-- Download and install MongoDB
-- Download and install ElasticSearch
+- Download and install [MongoDB](http://www.mongodb.org/)
+- Download and install [ElasticSearch](http://www.elasticsearch.org/)
 
-
+### Start services:
 - Start MongoDB, run 'mongod' from your terminal.
 - Start ElasticSearch, run 'elasticsearch' from your terminal.
 
-
+### Setup the project:
 - Extract 'page_links_bg.nt.bz2' in the project directory
 - Run the command 'mvn clean install' in the project directory
 
+### Run the topic indexing:
 
-- Run the 'com.findwise.topic.Main' class with the input parameter '-i' to start the indexing.
+To build the ontology used for the topic extraction we use the DBpedia Wikipedia Pagelinks Dataset.
+
+- Run 'java -jar topic-0.5-jar-with-dependencies.jar -i' to start the indexing.
 
    Expect the indexing to take several hours, depending on your computer performance and harddrive speed.
    It catalogues the whole link structure from Wikipedia into MongoDB for pre processing and then indexes the data into ElasticSearch.
@@ -61,14 +62,18 @@ To build the Ontology used for the topic extraction we use the DBpedia Wikipedia
 
 #### Indexed Data Example
 
+This is an example of the data indexed into ElasticSearch:
+
 ![Indexed data](docs/indexedData.png)
 
-### Extract topics
+## Extract topics
 
-- Run the 'com.findwise.topic.Main' class with the input parameter '-e' to extract topics from "test_input.txt" file. You can change the input file in 'com.findwise.topic.extractor.Main' and tweak the parameters for the system.
-- When done, the file 'result.html' contains the result as well as the relationship graph of the found topics.
+- Run 'java -jar topic-0.5-jar-with-dependencies.jar -e' to extract topics from "test_input.txt" file.
 
-### Workflow
+   You can change the input file in 'com.findwise.topic.extractor.Main' and tweak the parameters for the system.
+   When done, the file 'result.html' contains the result as well as the relationship graph of the found topics.
+
+### Extraction Workflow
 
 ![workflow](docs/workflow.jpg)
 
