@@ -43,6 +43,7 @@ Extracted Candidate Graph used to rank the topics:
 - Download DBpedia Wikipedia Pagelinks Dataset: [page_links_bg.nt.bz2](http://data.dws.informatik.uni-mannheim.de/dbpedia/2014/bg/page_links_bg.nt.bz2)
 - Download and install [MongoDB](http://www.mongodb.org/)
 - Download and install [ElasticSearch](http://www.elasticsearch.org/)
+- Download and install [Graphviz](http://www.graphviz.org/) (Used to visualize the Candidate Graphs)
 
 ### Start services:
 - Start MongoDB, run 'mongod' from your terminal.
@@ -70,7 +71,7 @@ This is an example of the data indexed into ElasticSearch:
 
 ## Extract topics
 
-- Run 'java -jar topic-0.5-jar-with-dependencies.jar -e' to extract topics from "test_input.txt" file.
+- Run 'java -jar topic-0.5-jar-with-dependencies.jar -e' to extract topics from "input.txt" file.
 
    You can change the input file in 'com.findwise.topic.extractor.Main' and tweak the parameters for the system.
    When done, the file 'result.html' contains the result as well as the relationship graph of the found topics.
