@@ -34,15 +34,15 @@ public class Main {
     static int minLinks = 1;
 
     // Input file
-    static String input = "test_input.txt";
+    static String input = "input.txt";
     static Map<String, Set<String>> topics;
 
     public static void run() {
         topics = new HashMap<String, Set<String>>();
-        extraxtTopics(input);
+        extractTopics(input);
     }
 
-    private static void extraxtTopics(String file) {
+    private static void extractTopics(String file) {
         TextImporter textImporter = new TextImporter();
 
         ArrayList<Section> sections;

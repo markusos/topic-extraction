@@ -11,6 +11,8 @@ More info about the thesis project can be found at: http://www.nada.kth.se/~mark
 
 ## Example
 
+Example result file: [result.html](docs/example/result.html)
+
 ### Input document:
 
 Encyclopedia Britannicas definition of Tree:

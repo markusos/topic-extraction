@@ -38,7 +38,6 @@ public class DBpediaSpotlightCandidateExtractor implements CandidateExtractor {
             System.err.println("Error connecting to MongoDB");
             e.printStackTrace();
         }
-
     }
 
     public Result getCandidates(String text) {

@@ -5,6 +5,8 @@ import com.findwise.topic.extractor.resultscorer.ClosenessCentralityResultScorer
 import com.findwise.topic.extractor.util.Result;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class ResultScorerTest {
 
     private String randomLink(String title) {

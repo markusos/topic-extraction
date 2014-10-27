@@ -7,8 +7,6 @@
 
 package com.findwise.topic.extractor.candidateextractor;
 
-import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
-
 import com.findwise.topic.api.Document;
 import com.findwise.topic.api.Tokenizer;
 import com.findwise.topic.extractor.util.Result;
@@ -20,15 +18,15 @@ import java.util.Set;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.node.Node;
 import org.elasticsearch.search.SearchHit;
 
 public class ElasticSearchCandidateExtractor implements CandidateExtractor {
 
-    Node node;
     Client client;
     Tokenizer tokenizer;
     int nrofSearchResults;
@@ -37,14 +35,13 @@ public class ElasticSearchCandidateExtractor implements CandidateExtractor {
 
     Result result;
 
-    public ElasticSearchCandidateExtractor(int nrofSearchResults, SearchMethod searchMethod, QueryType queryType) {
-        this.nrofSearchResults = nrofSearchResults;
+    public ElasticSearchCandidateExtractor(int nrOfSearchResults, SearchMethod searchMethod, QueryType queryType) {
+        this.nrofSearchResults = nrOfSearchResults;
         this.searchMethod = searchMethod;
         this.queryType = queryType;
 
-        node = nodeBuilder().client(true).node();
-        client = node.client();
-        tokenizer = new Tokenizer(node, client);
+        client = new TransportClient().addTransportAddress(new InetSocketTransportAddress("127.0.0.1", 9300));
+        tokenizer = new Tokenizer(client);
     }
 
     public Result getCandidates(String section) {
@@ -74,7 +71,7 @@ public class ElasticSearchCandidateExtractor implements CandidateExtractor {
         else
             query = sectionQuery(sentence);
 
-        QueryBuilder scoreQuery = QueryBuilders.customScoreQuery(query).script("_score");
+        QueryBuilder scoreQuery = QueryBuilders.functionScoreQuery(query);
 
         SearchResponse response = client.prepareSearch("wiki")
                 .setTypes("article")

@@ -48,9 +48,11 @@ public class DataIndexer {
     }
 
     public void indexData() throws IOException {
-        int batchIndexSize = 100000;
+        int batchIndexSize = 1000;
         int count = 0;
         store.setupCursor();
+        int size = store.cursorSize();
+        System.out.println("Indexing " + size + " documents...");
         index.initBulkIndex();
         try {
             while (store.cursorHasNext()) {
@@ -92,7 +94,7 @@ public class DataIndexer {
                     store.delete(title);
                 }
                 count++;
-                printProcessingProgressWhithTimestamp(count, size,
+                printProcessingProgressWhitTimestamp(count, size,
                         "Merge progress", 1000);
             }
         } finally {
@@ -128,7 +130,7 @@ public class DataIndexer {
                     }
                 }
                 count++;
-                printProcessingProgressWhithTimestamp(count, size,
+                printProcessingProgressWhitTimestamp(count, size,
                         "Backlink count progress", 1000);
             }
         } finally {
@@ -155,7 +157,7 @@ public class DataIndexer {
                     store.update(document);
                 }
                 count++;
-                printProcessingProgressWhithTimestamp(count, size,
+                printProcessingProgressWhitTimestamp(count, size,
                         "Backlink count save progress", 1000);
             }
         } finally {
@@ -195,7 +197,7 @@ public class DataIndexer {
                 document.addTokens(tokenSet);
                 store.update(document);
                 count++;
-                printProcessingProgressWhithTimestamp(count, size,
+                printProcessingProgressWhitTimestamp(count, size,
                         "Tokenize progress", 1000);
             }
         } finally {
@@ -205,8 +207,8 @@ public class DataIndexer {
 
     }
 
-    public void printProcessingProgressWhithTimestamp(int current, int total,
-                                                      String info, int printInterval) {
+    public void printProcessingProgressWhitTimestamp(int current, int total,
+                                                     String info, int printInterval) {
         if (current % (total / printInterval + 1) == 0) {
             java.util.Date date = new java.util.Date();
             System.out.println(info + ": "

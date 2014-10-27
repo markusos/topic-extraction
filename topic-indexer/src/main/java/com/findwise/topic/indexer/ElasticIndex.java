@@ -10,21 +10,19 @@ package com.findwise.topic.indexer;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.node.Node;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
 import com.findwise.topic.api.Document;
 
-import static org.elasticsearch.node.NodeBuilder.*;
-
 public class ElasticIndex implements Index {
-    Node node;
     Client client;
     BulkRequestBuilder bulkRequest;
 
     public ElasticIndex() {
-        node = nodeBuilder().client(true).node();
-        client = node.client();
+        client = new TransportClient().addTransportAddress(new InetSocketTransportAddress("127.0.0.1", 9300));
     }
 
     public void initBulkIndex() {
@@ -46,8 +44,10 @@ public class ElasticIndex implements Index {
     }
 
     public void index(Document document) {
-        client.prepareIndex("wiki", "article").setSource(document.toMap())
+        IndexResponse response = client.prepareIndex("wiki", "article").setSource(document.toMap())
                 .execute().actionGet();
+        if (!response.isCreated())
+            System.err.println("Error when indexing document " + document);
     }
 
     public void close() {

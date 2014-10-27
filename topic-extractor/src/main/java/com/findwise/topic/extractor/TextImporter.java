@@ -40,7 +40,7 @@ public class TextImporter {
         }
     }
 
-    // Read text file, no formating
+    // Read text file, no formatting
     public ArrayList<Section> readFile(String filepath) throws IOException {
 
         ArrayList<Section> sections = new ArrayList<Section>();
@@ -113,7 +113,7 @@ public class TextImporter {
      * Topic1</text> <topic>Topic2</topic> <text>Text containing Topic2</text>
      * ... Returns Sections for each topic/text pair
      */
-    public ArrayList<Section> readEvaluationFile(String filepath)
+    public ArrayList<Section> readEvaluationFile(String filePath)
             throws IOException {
         ArrayList<Section> sections = new ArrayList<Section>();
 
@@ -123,7 +123,7 @@ public class TextImporter {
         Pattern patternTextStart = Pattern.compile("(<text>)");
         Pattern patternTextEnd = Pattern.compile("(</text>)");
 
-        BufferedReader br = new BufferedReader(new FileReader(filepath));
+        BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line;
         while ((line = br.readLine()) != null) {
             Matcher topicMatcher = patternTopic.matcher(line);

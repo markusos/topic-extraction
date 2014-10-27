@@ -64,7 +64,7 @@ public class ResultEvaluator {
         return sections;
     }
 
-    public EvaluationScore evauatePerformence(ResultScorer scorer) {
+    public EvaluationScore evaluatePerformances(ResultScorer scorer) {
 
         float recall = 0;
         float totalRecall = 0;
@@ -75,7 +75,7 @@ public class ResultEvaluator {
             result.resetScore();
             result.filterUsedNodes(minLinks, minBacklinks);
             result.calculateScore(scorer);
-            int score = calculatePossitionScore(result, s);
+            int score = calculatePositionScore(result, s);
             totalScore += score;
             totalRecall += calculateRecall(result, s);
         }
@@ -101,7 +101,7 @@ public class ResultEvaluator {
             return 0;
     }
 
-    private int calculatePossitionScore(Result result, Section section) {
+    private int calculatePositionScore(Result result, Section section) {
         int score = 10;
         for (ResultNode r : result.getResultList(nrOfResults)) {
             for (String t : section.getTopics()) {

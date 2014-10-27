@@ -86,7 +86,11 @@ public class PresentationBuilder {
 
     private void generateGraphs() {
         try {
+            // Windows
             Runtime.getRuntime().exec("cmd /c start CreateGraph.cmd");
+            // *NIX // TODO: update code for *NIX
+            //String[] cmd = { "bash", "-c", "CreateGraph.sh" };
+            //Process p = Runtime.getRuntime().exec(cmd);
         } catch (IOException e) {
             e.printStackTrace();
         }

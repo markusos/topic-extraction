@@ -14,11 +14,9 @@ import org.elasticsearch.node.Node;
 
 public class Tokenizer {
 
-    Node node;
     Client client;
 
-    public Tokenizer(Node node, Client client) {
-        this.node = node;
+    public Tokenizer(Client client) {
         this.client = client;
     }
 
@@ -29,10 +27,9 @@ public class Tokenizer {
         AnalyzeResponse analyzeResponse = client.admin().indices()
                 .prepareAnalyze(input).execute().actionGet();
 
-        for (AnalyzeToken t : analyzeResponse.tokens()) {
-            tokens.add(t.term());
+        for (AnalyzeToken t : analyzeResponse.getTokens()) {
+            tokens.add(t.getTerm());
         }
         return tokens;
     }
-
 }
