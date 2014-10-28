@@ -45,6 +45,17 @@ Extracted Candidate Graph used to rank the topics:
 - Download and install [ElasticSearch](http://www.elasticsearch.org/)
 - Download and install [Graphviz](http://www.graphviz.org/) (Used to visualize the Candidate Graphs)
 
+### Configure ElasticSearch
+
+- Copy the stopwords.txt file to the config directory in your ElasticSearch folder.
+- Add the following to your 'elasticsearch.yml' config file to use the provided stopword list:
+>     index :
+>       analysis :
+>         analyzer :
+>           default :
+>             type : standard
+>             stopwords_path : stopwords.txt
+
 ### Start services:
 - Start MongoDB, run 'mongod' from your terminal.
 - Start ElasticSearch, run 'elasticsearch' from your terminal.
