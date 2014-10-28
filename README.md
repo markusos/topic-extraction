@@ -49,12 +49,14 @@ Extracted Candidate Graph used to rank the topics:
 
 - Copy the stopwords.txt file to the config directory in your ElasticSearch folder.
 - Add the following to your 'elasticsearch.yml' config file to use the provided stopword list:
->     index :
->       analysis :
->         analyzer :
->           default :
->             type : standard
->             stopwords_path : stopwords.txt
+```
+index :
+   analysis :
+      analyzer :
+         default :
+            type : standard
+            stopwords_path : stopwords.txt
+```
 
 ### Start services:
 - Start MongoDB, run 'mongod' from your terminal.
