@@ -29,14 +29,14 @@ public class ElasticSearchCandidateExtractor implements CandidateExtractor {
 
     Client client;
     Tokenizer tokenizer;
-    int nrofSearchResults;
+    int nrOfSearchResults;
     SearchMethod searchMethod;
     QueryType queryType;
 
     Result result;
 
     public ElasticSearchCandidateExtractor(int nrOfSearchResults, SearchMethod searchMethod, QueryType queryType) {
-        this.nrofSearchResults = nrOfSearchResults;
+        this.nrOfSearchResults = nrOfSearchResults;
         this.searchMethod = searchMethod;
         this.queryType = queryType;
 
@@ -76,7 +76,7 @@ public class ElasticSearchCandidateExtractor implements CandidateExtractor {
         SearchResponse response = client.prepareSearch("wiki")
                 .setTypes("article")
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(scoreQuery).setFrom(0).setSize(nrofSearchResults)
+                .setQuery(scoreQuery).setFrom(0).setSize(nrOfSearchResults)
                 .execute().actionGet();
 
         Document hitDocument;
