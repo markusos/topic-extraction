@@ -7,10 +7,10 @@ done
 
 for f in dot/*
 do
-  sfdp -Tsvg $f -o $f.svg
+  sfdp -Tsvg $f -o graphs/${f##*/}.svg
 done
 
-for f in graphs/*
+for f in dot/*
 do
   rm $f
 done

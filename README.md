@@ -11,7 +11,7 @@ More info about the thesis project can be found at: http://www.nada.kth.se/~mark
 
 ## Example
 
-Example result file: [result.html](docs/example/result.html)
+Example result file: [result.html](http://rawgit.com/markusos/topic-extraction/master/docs/example/result.html)
 
 ### Input document:
 

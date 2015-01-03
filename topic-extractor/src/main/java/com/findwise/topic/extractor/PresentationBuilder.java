@@ -86,11 +86,11 @@ public class PresentationBuilder {
 
     private void generateGraphs() {
         try {
+            // TODO update to detect running env
             // Windows
-            Runtime.getRuntime().exec("cmd /c start CreateGraph.cmd");
-            // *NIX // TODO: update code for *NIX
-            //String[] cmd = { "bash", "-c", "CreateGraph.sh" };
-            //Process p = Runtime.getRuntime().exec(cmd);
+            //Runtime.getRuntime().exec("cmd /c start CreateGraph.cmd");
+            // *NIX
+            Runtime.getRuntime().exec("/bin/bash -c ./CreateGraph.sh");
         } catch (IOException e) {
             e.printStackTrace();
         }
