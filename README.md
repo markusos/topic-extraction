@@ -7,7 +7,9 @@ Project Title: Subtopic extraction using graph-based methods.
 
 This code was used to explore subtopic extraction using search engine technology, combined with graph centrality ranking of topic candidates.
 
-More info about the thesis project can be found at: http://www.nada.kth.se/~markusos/thesis/
+
+
+More info about the thesis project can be found at: [https://www.csc.kth.se/~markusos/thesis/](https://www.csc.kth.se/~markusos/thesis/)
 
 ## Example
 
